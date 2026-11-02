@@ -1,16 +1,27 @@
 package main
 
 type Cache[K comparable, V any] struct {
-	capacity int
-	items    map[K]V
+        capacity int
+        items    map[K]V
 }
 
 func NewCache[K comparable, V any](capacity int) *Cache[K, V] {
-	panic("TODO: implement")
+        return &Cache[K, V]{capacity: capacity, items: make(map[K]V)}
 }
 func (c *Cache[K, V]) Get(k K) (v V, ok bool) {
-	panic("TODO: implement")
+        v, ok = c.items[k]
+        return
 }
 func (c *Cache[K, V]) Set(k K, v V) bool {
-	panic("TODO: implement")
+        _, found := c.items[k]
+        if found == true {
+                c.items[k] = v
+                return true
+        }
+        if len(c.items) >= c.capacity {
+                return false
+        }
+	c.items[k] = v
+	return true
 }
+
